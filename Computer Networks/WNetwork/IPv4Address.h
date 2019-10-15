@@ -8,6 +8,8 @@
 
 #if defined(WIN32) || defined(_WIN32)
 	#include <WS2tcpip.h>
+#elif defined(__linux__)
+  #include <arpa/inet.h>
 #endif
 
 class IPv4Address
@@ -23,7 +25,7 @@ class IPv4Address
 			}
 			m_address.SetFamily(AF_INET);
 			m_address.SetPort(port);
-		}	
+		}
 
 		IPv4Address(const SocketAddress& socketAddress) :
 			m_address{ socketAddress }
@@ -41,5 +43,5 @@ class IPv4Address
 		}
 	private:
 		SocketAddress m_address;
-		static const int IPStringSize{ 16 };
+		static const int32_t IPStringSize{ 16 };
 };

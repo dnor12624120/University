@@ -7,8 +7,12 @@ class WinSockException : public std::exception
 {
 	public:
 		WinSockException(const std::string& message) :
-			exception{ message.c_str() }
+			m_message{ message }
 		{
 
 		}
+
+		virtual const char* what() const throw() override { return m_message.c_str(); }
+	private:
+		std::string m_message;
 };
