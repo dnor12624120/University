@@ -33,7 +33,7 @@ class IPv4Address
 
 		}
 
-		inline const SocketAddress& GetSocketAddress() const { return m_address; }
+		inline const SocketAddress GetSocketAddress() const { return m_address; }
 
 		std::string GetAddressString()
 		{

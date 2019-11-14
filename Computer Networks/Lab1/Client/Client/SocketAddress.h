@@ -42,7 +42,7 @@ class SocketAddress
 			}
 		#endif
 
-		inline const sockaddr_in& GetStructure() const { return m_address; }
+		inline sockaddr_in GetStructure() const { return m_address; }
 
 		inline void SetFamily(unsigned short familyType) { m_address.sin_family = familyType; }
 		inline void SetPort(unsigned short port) { m_address.sin_port = port; }

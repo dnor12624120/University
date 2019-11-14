@@ -81,13 +81,15 @@ class Socket
 
 		void Bind(const IPv4Address& address)
 		{
-			if (bind(m_handle, (sockaddr*)&address.GetSocketAddress().GetStructure(), sizeof(sockaddr)) != 0)
+			SocketAddress socketAddress = address.GetSocketAddress();
+			socketAddress.SetPort(htons(socketAddress.GetPort()));
+			if (bind(m_handle, (sockaddr*)&socketAddress, sizeof(sockaddr)) != 0)
 			{
 				std::string errorCode(std::to_string(WNetworkGetErrorNumber()));
 				throw WinSockException(std::string("Error binding socket! (" + errorCode + ")").c_str());
 			}
 		}
-
+		
 		void Listen(int32_t backlog)
 		{
 			if (listen(m_handle, backlog) != 0)
@@ -109,7 +111,7 @@ class Socket
 				throw WinSockException(std::string("Error accepting connection! (" + errorCode + ")").c_str());
 			}
 			#if defined(WIN32) || defined(_WIN32)
-				clientAddress = SocketAddress(address.sin_family, address.sin_port, address.sin_addr.S_un.S_addr);
+				clientAddress = SocketAddress(address.sin_family, ntohs(address.sin_port), address.sin_addr.S_un.S_addr);
 			#elif defined(__linux__)
 				clientAddress = SocketAddress(address.sin_family, address.sin_port, address.sin_addr.s_addr);
 			#endif
@@ -118,7 +120,9 @@ class Socket
 
 		void Connect(const IPv4Address& address)
 		{
-			int32_t result = connect(m_handle, (sockaddr*)&address.GetSocketAddress().GetStructure(), sizeof(sockaddr));
+			SocketAddress socketAddress = address.GetSocketAddress();
+			socketAddress.SetPort(htons(socketAddress.GetPort()));
+			int32_t result = connect(m_handle, (sockaddr*)&socketAddress, sizeof(sockaddr));
 			if (result != 0)
 			{
 				std::string errorCode(std::to_string(WNetworkGetErrorNumber()));
