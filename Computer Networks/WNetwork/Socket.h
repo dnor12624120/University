@@ -64,15 +64,12 @@ class Socket
 			m_type = socket.m_type;
 			m_protocol = socket.m_protocol;
 			socket.m_handle = INVALID_SOCKET;
+			return *this;
 		}
 
 		~Socket() throw()
 		{
-			if (m_handle == INVALID_SOCKET)
-			{
-				throw WinSockException("Trying to close an invalid socket!");
-			}
-			if (closesocket(m_handle) == SOCKET_ERROR)
+			if (m_handle != INVALID_SOCKET && closesocket(m_handle) == SOCKET_ERROR)
 			{
 				std::string errorCode(std::to_string(WNetworkGetErrorNumber()));
 				throw WinSockException(std::string("Error closing socket! (" + errorCode + ")").c_str());
