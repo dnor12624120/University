@@ -6,14 +6,14 @@ class Problem:
         self.initial_state = initial_state
         self.final_state = None
         self.current_states = [initial_state]
-        self.invalid_problems = [2, 3]
+        self.invalid_problems = [2, 3] # there are no solutions for boards of size 2 and 3
         if self.initial_state.size in self.invalid_problems:
             raise ValueError
 
     def set_final_state(self, final_state):
         self.final_state = final_state
 
-    # returns all valid possible states that follow from the state on position index
+    # returns all valid possible states that follow from a given state
     def expand(self, state):
         expanded_states = []
         if state.is_complete():
@@ -24,6 +24,7 @@ class Problem:
                 expanded_states.append(new_state)
         return expanded_states
 
+    # the heuristic function is represented by the absolute difference between the positions of queens on all rows
     def heuristic(self, state, final_state):
         return sum([abs(c - f) for (c, f) in zip(state.values, final_state.values)])
 

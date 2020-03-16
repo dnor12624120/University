@@ -2,6 +2,11 @@ from Problem import Problem
 from State import State
 import timeit
 
+"""
+    The class defines 2 ways to solve a given problem:
+    a depth first search, and a greedy breadth first search.
+"""
+
 class Service:
     def __init__(self):
         self.computed_final_states = {}
@@ -18,6 +23,8 @@ class Service:
 
     def __greedy(self, problem):
         state_size = problem.initial_state.size
+        # we need a final correct solution for the heuristic function
+        # we can use solutions previously computed by DFS runs from computed_final_states
         if state_size not in self.computed_final_states:
             self.depth_first_search(problem)
 
@@ -31,12 +38,14 @@ class Service:
 
         return states[0]
 
+    # timed version of the plain function
     def depth_first_search(self, problem):
         start = timeit.default_timer()
         state = self.__depth_first_search(problem)
         end = timeit.default_timer()
         return end - start, state
 
+    # timed version of the plain function
     def greedy(self, problem):
         start = timeit.default_timer()
         state = self.__greedy(problem)

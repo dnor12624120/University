@@ -1,3 +1,4 @@
+# removes 0s from a list
 def filter_zeros(l):
     copy = l[:]
     while 0 in copy:

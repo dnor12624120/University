@@ -39,6 +39,7 @@ class State:
             return False
         return True
 
+    # a solution is complete if there's a queen placed on each row
     def is_complete(self):
         return len(set(filter_zeros(self.values))) == len(self.values)
 
