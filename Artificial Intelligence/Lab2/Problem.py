@@ -1,6 +1,12 @@
 from State import State
 from Utility import filter_zeros
 
+"""
+    The class defines a way in which the search space of
+    a given state can be expanded and a way to compare
+    states based on a final, correct state - the heuristic function.
+"""
+
 class Problem:
     def __init__(self, initial_state):
         self.initial_state = initial_state

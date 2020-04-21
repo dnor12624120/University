@@ -1,0 +1,11 @@
+runs 30
+colony_size 500
+iterations 100
+size 3
+alpha 0.2
+beta 0.3
+rho 0.5
+q0 0.5
+pheromone_amount 0.5
+tau 0.5
+default_trace 1
