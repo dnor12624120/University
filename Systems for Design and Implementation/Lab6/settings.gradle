@@ -1,0 +1,5 @@
+rootProject.name = 'RentalService'
+include 'client'
+include 'server'
+include 'common'
+
